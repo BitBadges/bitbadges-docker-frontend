@@ -24,7 +24,7 @@ RUN npm install -g npm@9.6.4
 
 RUN npm install
 
-RUN curl https://google.com/api/v8
+RUN curl https://google.com/api/v9
 COPY frontend.env .
 RUN mv frontend.env .env
 
