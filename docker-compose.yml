@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    environment:
+      - BITBADGES_IO=true
+    tty: true
+    ports:
+      - 3000:3000
+    depends_on:
+      - blockchain
+      - couchdb
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    tty: true
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - frontend
+
+volumes:
+  data:
+  chain:
