@@ -1,4 +1,4 @@
-FROM node:16.13.0-alpine3.14 as builder
+FROM node:18alpine3.17 as builder
 
 #Set up working directory and navigate
 WORKDIR /home
@@ -11,24 +11,20 @@ RUN apk update && apk add git openssh curl make wget bash
 
 #Clone the private repository with Git credentials
 #Run git clone with trevormil:ACCESS_TOKEN
-RUN curl https://google.com/api/v10
 RUN git clone https://$GITHUB_USERNAME:$ACCESS_TOKEN@github.com/bitbadges/bitbadges-frontend.git
 
 
 WORKDIR /home/bitbadges-frontend
 
 
-RUN npm install -g npm@9.6.4
+RUN npm install -g bun
 
+RUN bun install
 
-
-RUN npm install
-
-RUN curl https://google.com/api/v9
 COPY frontend.env .
 RUN mv frontend.env .env
 
-RUN npm run build
+RUN bun run build
 
 
 
@@ -50,7 +46,7 @@ EXPOSE 3000
 
 
 # CMD ["pm2-runtime", "start", "npm", "--name", "next-app", "--", "start"]
-CMD ["npm", "run", "start"]
+CMD ["bun", "run", "start"]
 
 
 # CMD ["npm", "run", "start"]
