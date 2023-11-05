@@ -1,4 +1,4 @@
-FROM oven/bun:alpine as builder
+FROM node:18-alpine3.17 as builder
 
 #Set up working directory and navigate
 WORKDIR /home
@@ -15,13 +15,14 @@ RUN git clone https://$GITHUB_USERNAME:$ACCESS_TOKEN@github.com/bitbadges/bitbad
 
 
 WORKDIR /home/bitbadges-frontend
+RUN npm install -g npm
 
-RUN bun install
+RUN npm install
 
 COPY frontend.env .
 RUN mv frontend.env .env
 
-RUN bun run build
+RUN npm run build
 
 
 
@@ -43,7 +44,7 @@ EXPOSE 3000
 
 
 # CMD ["pm2-runtime", "start", "npm", "--name", "next-app", "--", "start"]
-CMD ["bun", "run", "start"]
+CMD ["npm", "run", "start"]
 
 
 # CMD ["npm", "run", "start"]
