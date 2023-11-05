@@ -1,4 +1,4 @@
-FROM node:18-alpine3.17 as builder
+FROM node:18-alpine as builder
 
 #Set up working directory and navigate
 WORKDIR /home
